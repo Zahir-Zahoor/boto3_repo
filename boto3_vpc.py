@@ -10,16 +10,30 @@ vpc = ec2.create_vpc(CidrBlock='10.0.0.0/16')
 vpc_id = vpc['Vpc']['VpcId']
 
 # Enable DNS
-ec2.modify_vpc_attribute(VpcId=vpc_id, EnableDnsSupport={'Value': True})
-ec2.modify_vpc_attribute(VpcId=vpc_id, EnableDnsHostnames={'Value': True})
+ec2.modify_vpc_attribute(
+VpcId=vpc_id, 
+EnableDnsSupport={'Value': True}
+)
+ec2.modify_vpc_attribute(
+VpcId=vpc_id,
 
-ec2.create_tags(Resources=[vpc_id], Tags=[{'Key': 'Name', 'Value': 'MyVPC'}])
+EnableDnsHostnames={'Value': True}
+)
+
+ec2.create_tags(
+Resources=[vpc_id], 
+Tags=[{'Key': 'Name', 'Value': 'MyVPC'}]
+)
 print(f"✅ VPC created: {vpc_id}")
 
 # =========================
 # 2. Create Subnets
 # =========================
-subnet_pub1 = ec2.create_subnet(VpcId=vpc_id, CidrBlock='10.0.1.0/24', AvailabilityZone='ap-south-1a')
+subnet_pub1 = ec2.create_subnet(
+VpcId=vpc_id, 
+CidrBlock='10.0.1.0/24', 
+AvailabilityZone='ap-south-1a'
+)
 subnet_pub2 = ec2.create_subnet(VpcId=vpc_id, CidrBlock='10.0.2.0/24', AvailabilityZone='ap-south-1b')
 subnet_priv1 = ec2.create_subnet(VpcId=vpc_id, CidrBlock='10.0.3.0/24', AvailabilityZone='ap-south-1a')
 subnet_priv2 = ec2.create_subnet(VpcId=vpc_id, CidrBlock='10.0.4.0/24', AvailabilityZone='ap-south-1b')
